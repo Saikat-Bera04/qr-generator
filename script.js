@@ -1,13 +1,15 @@
 let logoImage = null;
 let currentPattern = "square";
+let fgColor = "#000000";
+let bgColor = "#ffffff";
 
 const qrCode = new QRCodeStyling({
   width: 240,
   height: 240,
-  data: "https://example.com",
+  data: "",
   margin: 10,
-  dotsOptions: { type: "square", color: "#000" },
-  backgroundOptions: { color: "#fff" },
+  dotsOptions: { type: "square", color: fgColor },
+  backgroundOptions: { color: bgColor },
   imageOptions: { margin: 6 }
 });
 
@@ -24,14 +26,24 @@ function applyFrame(frame) {
   frameEl.classList.add(`frame-${frame}`);
 }
 
-/* Color palettes */
+/* Manual color pickers */
+document.getElementById("manualFg").oninput = e => {
+  fgColor = e.target.value;
+  generateQR();
+};
+
+document.getElementById("manualBg").oninput = e => {
+  bgColor = e.target.value;
+  generateQR();
+};
+
+/* Palette click */
 document.querySelectorAll(".palette").forEach(p => {
   p.style.background = `linear-gradient(45deg, ${p.dataset.fg}, ${p.dataset.bg})`;
   p.onclick = () => {
-    qrCode.update({
-      dotsOptions: { color: p.dataset.fg, type: currentPattern },
-      backgroundOptions: { color: p.dataset.bg }
-    });
+    fgColor = p.dataset.fg;
+    bgColor = p.dataset.bg;
+    generateQR();
   };
 });
 
@@ -59,12 +71,16 @@ function generateQR() {
     margin: +document.getElementById("margin").value,
     dotsOptions: {
       type: currentPattern,
+      color: fgColor,
       scale: document.getElementById("dotScale").value / 100
+    },
+    backgroundOptions: {
+      color: bgColor
     },
     image: logoImage
   });
 }
 
 function downloadQR() {
-  qrCode.download({ name: "glassqr", extension: "png" });
+  qrCode.download({ name: "qrystal", extension: "png" });
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GLASSQR</title>
+  <title>QRYSTAL</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -10,26 +10,42 @@
 
   <div class="background"></div>
 
-  <h1 class="app-title">GLASSQR</h1>
+  <h1 class="app-title">QRYSTAL</h1>
+  <p class="tagline">Crystal clear QR codes</p>
 
   <div class="wrapper">
 
     <!-- CONTROLS -->
     <div class="glass-card controls">
-      <h2>Customize</h2>
+      <h2>Customize QR</h2>
 
-      <input type="text" id="qrText" placeholder="Enter text or URL" />
+      <!-- Beautiful link input -->
+      <div class="link-box">
+        <span>🔗</span>
+        <input type="text" id="qrText" placeholder="Paste your link or text here..." />
+      </div>
+
+      <!-- Manual colors -->
+      <label>Manual Colors</label>
+      <div class="manual-colors">
+        <div>
+          <span>QR</span>
+          <input type="color" id="manualFg" value="#000000" />
+        </div>
+        <div>
+          <span>BG</span>
+          <input type="color" id="manualBg" value="#ffffff" />
+        </div>
+      </div>
 
       <label>Color Palettes</label>
       <div class="palette-row">
         <div class="palette" data-fg="#000" data-bg="#fff"></div>
         <div class="palette" data-fg="#fff" data-bg="#000"></div>
-        <div class="palette" data-fg="#ff4ecd" data-bg="#120014"></div>
         <div class="palette" data-fg="#00ffd5" data-bg="#001f1f"></div>
+        <div class="palette" data-fg="#ff4ecd" data-bg="#120014"></div>
         <div class="palette" data-fg="#6a5acd" data-bg="#f4f3ff"></div>
         <div class="palette" data-fg="#ffb703" data-bg="#1a1a1a"></div>
-        <div class="palette" data-fg="#3cff00" data-bg="#001400"></div>
-        <div class="palette" data-fg="#ff6b6b" data-bg="#fff0f0"></div>
       </div>
 
       <label>Pattern Style</label>
@@ -76,7 +92,7 @@
   </div>
 
   <footer>
-    develop by kiran with ❤️
+    developed by kiran with ❤️
   </footer>
 
   <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
