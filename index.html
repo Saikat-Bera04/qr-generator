@@ -72,10 +72,13 @@
       <label>Dot Spacing</label>
       <input type="range" id="dotScale" min="30" max="100" value="100" />
 
-      <div id="drop-zone">
-        <p>Drag & Drop Logo<br>or Tap to Upload</p>
-        <input type="file" id="logoUpload" hidden />
-      </div>
+     <div id="drop-zone">
+  <p id="upload-text">Drag & Drop Logo<br>or Tap to Upload</p>
+  <img id="logo-preview" alt="Logo Preview" />
+  <span id="upload-status"></span>
+  <input type="file" id="logoUpload" accept="image/*" hidden />
+</div>
+
 
       <button onclick="generateQR()">Generate QR</button>
     </div>

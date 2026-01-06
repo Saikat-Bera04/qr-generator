@@ -84,3 +84,24 @@ function generateQR() {
 function downloadQR() {
   qrCode.download({ name: "qrystal", extension: "png" });
 }
+function loadLogo(file) {
+  if (!file || !file.type.startsWith("image/")) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    logoImage = reader.result;
+
+    const preview = document.getElementById("logo-preview");
+    const status = document.getElementById("upload-status");
+    const text = document.getElementById("upload-text");
+
+    preview.src = logoImage;
+    preview.style.display = "block";
+    status.style.display = "block";
+    status.textContent = "✔ Logo uploaded successfully";
+    text.style.display = "none";
+
+    generateQR();
+  };
+  reader.readAsDataURL(file);
+}
