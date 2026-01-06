@@ -140,9 +140,62 @@ function generateQR() {
   }
 }
 
+// ... (keep all existing code above the downloadQR function) ...
+
 function downloadQR() {
-  qrCode.download({ name: "qrystal", extension: "png" });
+  const qrContainer = document.getElementById('qr-container');
+  const qrCanvas = qrContainer.querySelector('canvas');
+  
+  if (!qrCanvas) {
+    console.error('QR Code canvas not found');
+    return;
+  }
+
+  if (bgImage) {
+    // Create a temporary canvas to combine background and QR code
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // Set canvas size to match QR code
+    tempCanvas.width = qrCanvas.width;
+    tempCanvas.height = qrCanvas.height;
+
+    // Create an image element for the background
+    const bgImg = new Image();
+    bgImg.crossOrigin = 'anonymous'; // Handle CORS if needed
+    
+    bgImg.onload = function() {
+      // Draw the background image
+      tempCtx.drawImage(bgImg, 0, 0, tempCanvas.width, tempCanvas.height);
+      
+      // Draw the QR code on top
+      tempCtx.drawImage(qrCanvas, 0, 0);
+      
+      // Create a temporary link to trigger download
+      const link = document.createElement('a');
+      link.download = 'qrystal-with-bg.png';
+      link.href = tempCanvas.toDataURL('image/png');
+      
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+    
+    bgImg.onerror = function() {
+      console.error('Error loading background image for download');
+      // Fallback to regular download if background fails to load
+      qrCode.download({ name: "qrystal", extension: "png" });
+    };
+    
+    bgImg.src = bgImage;
+  } else {
+    // Original download if no background image
+    qrCode.download({ name: "qrystal", extension: "png" });
+  }
 }
+
+// ... (keep all existing code below the downloadQR function) ...
 function loadLogo(file) {
   if (!file || !file.type.startsWith("image/")) return;
 
