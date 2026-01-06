@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Advanced QR Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div class="wrapper">
+
+    <!-- LEFT : CONTROLS -->
+    <div class="glass-card controls">
+      <h2>QR Controls</h2>
+
+      <input type="text" id="qrText" placeholder="Enter text or URL" />
+
+      <label>QR Color</label>
+      <input type="color" id="qrColor" value="#000000" />
+
+      <label>Background</label>
+      <input type="color" id="bgColor" value="#ffffff" />
+
+      <label>Pattern Style</label>
+      <select id="pattern">
+        <option value="square">Square</option>
+        <option value="dots">Dots</option>
+        <option value="rounded">Rounded</option>
+      </select>
+
+      <label>Inner Margin (Quiet Zone)</label>
+      <input type="range" id="margin" min="0" max="40" value="10" />
+
+      <label>Dot Scale (Pattern Spacing)</label>
+      <input type="range" id="dotScale" min="30" max="100" value="100" />
+
+      <label>Upload Logo</label>
+      <input type="file" id="logoUpload" accept="image/*" />
+
+      <button onclick="generateQR()">Generate QR</button>
+    </div>
+
+    <!-- RIGHT : QR OUTPUT -->
+    <div class="glass-card preview">
+      <h2>QR Preview</h2>
+      <div id="qr-container"></div>
+      <button onclick="downloadQR()">Download</button>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
