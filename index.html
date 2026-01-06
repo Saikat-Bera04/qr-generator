@@ -72,7 +72,16 @@
       <label>Dot Spacing</label>
       <input type="range" id="dotScale" min="30" max="100" value="100" />
 
-     <div id="drop-zone">
+      <label>Background Image</label>
+      <div id="bg-drop-zone" class="drop-zone">
+        <p>Drag & Drop Background<br>or Tap to Upload</p>
+        <img id="bg-preview" alt="Background Preview" />
+        <span id="bg-upload-status"></span>
+        <input type="file" id="bgUpload" accept="image/*" hidden />
+      </div>
+
+      <label>Logo</label>
+      <div id="logo-drop-zone" class="drop-zone">
   <p id="upload-text">Drag & Drop Logo<br>or Tap to Upload</p>
   <img id="logo-preview" alt="Logo Preview" />
   <span id="upload-status"></span>

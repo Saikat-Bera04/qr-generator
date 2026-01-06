@@ -1,4 +1,5 @@
 let logoImage = null;
+let bgImage = null;
 let currentPattern = "square";
 let fgColor = "#000000";
 let bgColor = "#ffffff";
@@ -47,38 +48,96 @@ document.querySelectorAll(".palette").forEach(p => {
   };
 });
 
-/* Drag & drop */
-const dropZone = document.getElementById("drop-zone");
-const fileInput = document.getElementById("logoUpload");
+/* Drag & drop for logo */
+const logoDropZone = document.getElementById("logo-drop-zone");
+const logoFileInput = document.getElementById("logoUpload");
 
-dropZone.onclick = () => fileInput.click();
-dropZone.ondragover = e => e.preventDefault();
-dropZone.ondrop = e => {
+logoDropZone.onclick = () => logoFileInput.click();
+logoDropZone.ondragover = e => e.preventDefault();
+logoDropZone.ondrop = e => {
   e.preventDefault();
   loadLogo(e.dataTransfer.files[0]);
 };
-fileInput.onchange = e => loadLogo(e.target.files[0]);
+logoFileInput.onchange = e => loadLogo(e.target.files[0]);
 
-function loadLogo(file) {
+/* Drag & drop for background */
+const bgDropZone = document.getElementById("bg-drop-zone");
+const bgFileInput = document.getElementById("bgUpload");
+
+bgDropZone.onclick = () => bgFileInput.click();
+bgDropZone.ondragover = e => e.preventDefault();
+bgDropZone.ondrop = e => {
+  e.preventDefault();
+  loadBackground(e.dataTransfer.files[0]);
+};
+bgFileInput.onchange = e => loadBackground(e.target.files[0]);
+
+function loadBackground(file) {
+  if (!file || !file.type.startsWith("image/")) return;
+
   const reader = new FileReader();
-  reader.onload = () => logoImage = reader.result;
+  reader.onload = () => {
+    bgImage = reader.result;
+
+    const preview = document.getElementById("bg-preview");
+    const status = document.getElementById("bg-upload-status");
+    const text = bgDropZone.querySelector('p');
+
+    preview.src = bgImage;
+    preview.style.display = "block";
+    status.style.display = "block";
+    status.textContent = "✔ Background uploaded";
+    text.style.display = "none";
+
+    generateQR();
+  };
   reader.readAsDataURL(file);
 }
 
 function generateQR() {
-  qrCode.update({
-    data: document.getElementById("qrText").value || " ",
-    margin: +document.getElementById("margin").value,
-    dotsOptions: {
-      type: currentPattern,
-      color: fgColor,
-      scale: document.getElementById("dotScale").value / 100
-    },
-    backgroundOptions: {
-      color: bgColor
-    },
-    image: logoImage
-  });
+  const qrContainer = document.getElementById("qr-container");
+  
+  // Apply background image if available
+  if (bgImage) {
+    qrContainer.style.backgroundImage = `url(${bgImage})`;
+    qrContainer.style.backgroundSize = 'cover';
+    qrContainer.style.backgroundPosition = 'center';
+    qrContainer.style.backgroundRepeat = 'no-repeat';
+    
+    // Make QR code background transparent when background image is present
+    qrCode.update({
+      data: document.getElementById("qrText").value || " ",
+      margin: +document.getElementById("margin").value,
+      dotsOptions: {
+        type: currentPattern,
+        color: fgColor,
+        scale: document.getElementById("dotScale").value / 100
+      },
+      backgroundOptions: {
+        color: 'transparent',
+        gradient: null
+      },
+      image: logoImage
+    });
+  } else {
+    qrContainer.style.backgroundImage = 'none';
+    
+    // Use solid background color when no background image
+    qrCode.update({
+      data: document.getElementById("qrText").value || " ",
+      margin: +document.getElementById("margin").value,
+      dotsOptions: {
+        type: currentPattern,
+        color: fgColor,
+        scale: document.getElementById("dotScale").value / 100
+      },
+      backgroundOptions: {
+        color: bgColor,
+        gradient: null
+      },
+      image: logoImage
+    });
+  }
 }
 
 function downloadQR() {
@@ -98,7 +157,7 @@ function loadLogo(file) {
     preview.src = logoImage;
     preview.style.display = "block";
     status.style.display = "block";
-    status.textContent = "✔ Logo uploaded successfully";
+    status.textContent = "✔ Logo uploaded";
     text.style.display = "none";
 
     generateQR();
