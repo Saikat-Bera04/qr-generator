@@ -2,8 +2,8 @@ let logoImage = null;
 let currentPattern = "square";
 
 const qrCode = new QRCodeStyling({
-  width: 260,
-  height: 260,
+  width: 240,
+  height: 240,
   data: "https://example.com",
   margin: 10,
   dotsOptions: { type: "square", color: "#000" },
@@ -18,7 +18,13 @@ function setPattern(type) {
   generateQR();
 }
 
-/* Color palette click */
+function applyFrame(frame) {
+  const frameEl = document.getElementById("qr-frame");
+  frameEl.className = "";
+  frameEl.classList.add(`frame-${frame}`);
+}
+
+/* Color palettes */
 document.querySelectorAll(".palette").forEach(p => {
   p.style.background = `linear-gradient(45deg, ${p.dataset.fg}, ${p.dataset.bg})`;
   p.onclick = () => {
@@ -29,29 +35,19 @@ document.querySelectorAll(".palette").forEach(p => {
   };
 });
 
-/* Drag & drop logo */
+/* Drag & drop */
 const dropZone = document.getElementById("drop-zone");
 const fileInput = document.getElementById("logoUpload");
 
 dropZone.onclick = () => fileInput.click();
-
-dropZone.ondragover = e => {
-  e.preventDefault();
-  dropZone.style.opacity = "0.7";
-};
-
-dropZone.ondragleave = () => dropZone.style.opacity = "1";
-
+dropZone.ondragover = e => e.preventDefault();
 dropZone.ondrop = e => {
   e.preventDefault();
-  dropZone.style.opacity = "1";
   loadLogo(e.dataTransfer.files[0]);
 };
-
 fileInput.onchange = e => loadLogo(e.target.files[0]);
 
 function loadLogo(file) {
-  if (!file) return;
   const reader = new FileReader();
   reader.onload = () => logoImage = reader.result;
   reader.readAsDataURL(file);

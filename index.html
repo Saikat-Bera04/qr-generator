@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>GLASSQR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -13,18 +14,22 @@
 
   <div class="wrapper">
 
-    <!-- LEFT : CONTROLS -->
+    <!-- CONTROLS -->
     <div class="glass-card controls">
-      <h2>Customize QR</h2>
+      <h2>Customize</h2>
 
       <input type="text" id="qrText" placeholder="Enter text or URL" />
 
       <label>Color Palettes</label>
       <div class="palette-row">
-        <div class="palette" data-fg="#000000" data-bg="#ffffff"></div>
-        <div class="palette" data-fg="#ffffff" data-bg="#000000"></div>
-        <div class="palette" data-fg="#6a5acd" data-bg="#f5f5ff"></div>
+        <div class="palette" data-fg="#000" data-bg="#fff"></div>
+        <div class="palette" data-fg="#fff" data-bg="#000"></div>
+        <div class="palette" data-fg="#ff4ecd" data-bg="#120014"></div>
         <div class="palette" data-fg="#00ffd5" data-bg="#001f1f"></div>
+        <div class="palette" data-fg="#6a5acd" data-bg="#f4f3ff"></div>
+        <div class="palette" data-fg="#ffb703" data-bg="#1a1a1a"></div>
+        <div class="palette" data-fg="#3cff00" data-bg="#001400"></div>
+        <div class="palette" data-fg="#ff6b6b" data-bg="#fff0f0"></div>
       </div>
 
       <label>Pattern Style</label>
@@ -32,7 +37,18 @@
         <button onclick="setPattern('square')">◼</button>
         <button onclick="setPattern('dots')">●</button>
         <button onclick="setPattern('rounded')">⬤</button>
+        <button onclick="setPattern('classy')">◆</button>
+        <button onclick="setPattern('extra-rounded')">⬣</button>
       </div>
+
+      <label>QR Frame</label>
+      <select id="frameSelect" onchange="applyFrame(this.value)">
+        <option value="none">None</option>
+        <option value="rounded">Rounded</option>
+        <option value="glass">Glass</option>
+        <option value="neon">Neon</option>
+        <option value="minimal">Minimal</option>
+      </select>
 
       <label>Inner Margin</label>
       <input type="range" id="margin" min="0" max="40" value="10" />
@@ -40,20 +56,21 @@
       <label>Dot Spacing</label>
       <input type="range" id="dotScale" min="30" max="100" value="100" />
 
-      <!-- DRAG & DROP UPLOADER -->
       <div id="drop-zone">
-        <p>Drag & Drop Logo<br>or Click to Upload</p>
-        <input type="file" id="logoUpload" accept="image/*" hidden />
+        <p>Drag & Drop Logo<br>or Tap to Upload</p>
+        <input type="file" id="logoUpload" hidden />
       </div>
 
       <button onclick="generateQR()">Generate QR</button>
     </div>
 
-    <!-- RIGHT : QR PREVIEW -->
+    <!-- PREVIEW -->
     <div class="glass-card preview">
       <h2>Preview</h2>
-      <div id="qr-container"></div>
-      <button onclick="downloadQR()">Download QR</button>
+      <div id="qr-frame" class="frame-none">
+        <div id="qr-container"></div>
+      </div>
+      <button onclick="downloadQR()">Download</button>
     </div>
 
   </div>
