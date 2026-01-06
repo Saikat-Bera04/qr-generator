@@ -2,54 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Advanced QR Generator</title>
+  <title>GLASSQR</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <div class="background"></div>
 
+  <h1 class="app-title">GLASSQR</h1>
+
   <div class="wrapper">
 
     <!-- LEFT : CONTROLS -->
     <div class="glass-card controls">
-      <h2>QR Controls</h2>
+      <h2>Customize QR</h2>
 
       <input type="text" id="qrText" placeholder="Enter text or URL" />
 
-      <label>QR Color</label>
-      <input type="color" id="qrColor" value="#000000" />
-
-      <label>Background</label>
-      <input type="color" id="bgColor" value="#ffffff" />
+      <label>Color Palettes</label>
+      <div class="palette-row">
+        <div class="palette" data-fg="#000000" data-bg="#ffffff"></div>
+        <div class="palette" data-fg="#ffffff" data-bg="#000000"></div>
+        <div class="palette" data-fg="#6a5acd" data-bg="#f5f5ff"></div>
+        <div class="palette" data-fg="#00ffd5" data-bg="#001f1f"></div>
+      </div>
 
       <label>Pattern Style</label>
-      <select id="pattern">
-        <option value="square">Square</option>
-        <option value="dots">Dots</option>
-        <option value="rounded">Rounded</option>
-      </select>
+      <div class="pattern-row">
+        <button onclick="setPattern('square')">◼</button>
+        <button onclick="setPattern('dots')">●</button>
+        <button onclick="setPattern('rounded')">⬤</button>
+      </div>
 
-      <label>Inner Margin (Quiet Zone)</label>
+      <label>Inner Margin</label>
       <input type="range" id="margin" min="0" max="40" value="10" />
 
-      <label>Dot Scale (Pattern Spacing)</label>
+      <label>Dot Spacing</label>
       <input type="range" id="dotScale" min="30" max="100" value="100" />
 
-      <label>Upload Logo</label>
-      <input type="file" id="logoUpload" accept="image/*" />
+      <!-- DRAG & DROP UPLOADER -->
+      <div id="drop-zone">
+        <p>Drag & Drop Logo<br>or Click to Upload</p>
+        <input type="file" id="logoUpload" accept="image/*" hidden />
+      </div>
 
       <button onclick="generateQR()">Generate QR</button>
     </div>
 
-    <!-- RIGHT : QR OUTPUT -->
+    <!-- RIGHT : QR PREVIEW -->
     <div class="glass-card preview">
-      <h2>QR Preview</h2>
+      <h2>Preview</h2>
       <div id="qr-container"></div>
-      <button onclick="downloadQR()">Download</button>
+      <button onclick="downloadQR()">Download QR</button>
     </div>
 
   </div>
+
+  <footer>
+    develop by kiran with ❤️
+  </footer>
 
   <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
   <script src="script.js"></script>

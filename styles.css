@@ -6,21 +6,29 @@
 body {
   margin: 0;
   min-height: 100vh;
+  color: white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
-/* GIF background */
+/* App title */
+.app-title {
+  margin: 20px 0 10px;
+  font-size: 32px;
+  letter-spacing: 2px;
+}
+
+/* Background GIF */
 .background {
   position: fixed;
   inset: 0;
-  background: url("https://i.pinimg.com/originals/f5/f2/74/f5f27448c036af645c27467c789ad759.gif")
+  background: url("https://i.pinimg.com/originals/75/b7/ee/75b7ee56e043ad3a4c7f569959b4ae92.gif")
     center / cover no-repeat;
   z-index: -1;
 }
 
-/* Layout wrapper */
+/* Layout */
 .wrapper {
   display: flex;
   gap: 30px;
@@ -31,39 +39,72 @@ body {
   width: 360px;
   padding: 25px;
   border-radius: 20px;
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(16px);
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 40px rgba(128, 128, 128, 0.45);
-  color: white;
+  box-shadow: 0 20px 40px rgba(120, 120, 120, 0.45);
 }
 
-.controls input,
-.controls select {
-  margin-bottom: 10px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-button {
+/* Inputs */
+input, button {
   width: 100%;
+  margin-top: 8px;
   padding: 10px;
   border-radius: 10px;
   border: none;
-  background: rgba(255, 255, 255, 0.25);
-  color: white;
-  font-weight: bold;
+}
+
+/* Palette buttons */
+.palette-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.palette {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.5);
 }
 
-button:hover {
-  background: rgba(255, 255, 255, 0.4);
+/* Pattern buttons */
+.pattern-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
+.pattern-row button {
+  flex: 1;
+  font-size: 18px;
+}
+
+/* Drag & Drop */
+#drop-zone {
+  margin-top: 15px;
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px dashed rgba(255,255,255,0.6);
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#drop-zone:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* QR container */
 #qr-container {
   display: flex;
   justify-content: center;
   margin: 20px 0;
+}
+
+/* Footer */
+footer {
+  margin-top: 20px;
+  font-size: 14px;
+  opacity: 0.8;
 }
